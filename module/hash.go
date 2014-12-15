@@ -43,6 +43,9 @@ func (h *Hash) Check(other []byte, salt []byte) bool {
 
 //范围检测, 检测成功返回true和对应值,失败返回false和空串
 func (h *Hash) CheckRange(start string, end string) string {
+	if !less(start, end) { //start > end illegalParameters
+		return ""
+	}
 	var current = start
 	var last = end
 	for current != last {
