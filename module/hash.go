@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"hash"
+	"math/rand"
 )
 
 var table []byte = []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
@@ -21,6 +22,16 @@ func (h *Hash) Init(src []byte, salt []byte) string {
 	h.hashCtx.Write(src)
 	h.hashStr = hex.EncodeToString(h.hashCtx.Sum(salt))
 	return h.GetHash()
+}
+
+func (h *Hash) InitRand() {
+	buffer := make([]byte, 5)
+	rand.Seed(41)
+	for i := 0; i < 5; i++ {
+		index := rand.Intn(len(table))
+		buffer[i] = table[index]
+	}
+	h.Init(buffer, nil)
 }
 
 func (h *Hash) GetHash() string {
