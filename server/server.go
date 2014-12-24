@@ -1,6 +1,7 @@
 package server
 
 import (
+	"errors"
 	"github.com/yijun1171/Lab1/module"
 	"log"
 	"net"
@@ -8,16 +9,31 @@ import (
 	"net/rpc/jsonrpc"
 )
 
-type ServerHandler struct{}
+type ServerHandler struct {
+	clientSet module.HashSet //用于保存所有注册的客户端
+
+}
 
 //Hash 命令处理方法
+//1.请求客户端注册 2.运算请求入队
 func (h *ServerHandler) MHash(req *module.Protocol, resp *module.Protocol) error {
 	log.Println("recived : commond:", req.Commond)
+	if req.Commond == "" {
+		return errors.New("commond is empty")
+	}
 	resp.Commond = module.MHASH
 	return nil
 }
 
-func (h *ServerHandler) Hash(req *int, resp *int) error {
+//Ping handler
+func (h *ServerHandler) MPing(req *module.Protocol, resp *module.Protocol) error {
+
+	return nil
+}
+
+//request join handler
+func (h *ServerHandler) MREQ_JOIN(req *module.Protocol, resp *module.Protocol) error {
+
 	return nil
 }
 func startServer(port int) {
