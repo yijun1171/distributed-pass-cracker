@@ -30,6 +30,7 @@ func NewReqClient(host string, port int) *RequestClient {
 
 //向服务器发出RPC调用
 func (r *RequestClient) request(methodName string, args *module.Protocol, reply *module.Protocol) bool {
+	log.Println("call remote method:", methodName)
 	err := r.clientInfo.rpcClient.Call(methodName, args, reply)
 	if err != nil {
 		log.Println(err.Error())
@@ -40,9 +41,9 @@ func (r *RequestClient) request(methodName string, args *module.Protocol, reply 
 
 //向服务器发出命令:HASH
 func (r *RequestClient) ReqHash() bool {
-	args := module.NewMsg("", r.getId(), r.hash.GetHash())
+	args := module.NewMsg(module.MHASH, r.getId(), r.hash.GetHash())
 	reply := module.NewMsg("", "", "")
-	result := r.request(module.MHASH, args, reply)
+	result := r.request(module.GetMethod(module.MHASH), args, reply)
 	log.Println("get reply from server:", reply.Commond)
 	if result {
 		//服务器接受任务请求

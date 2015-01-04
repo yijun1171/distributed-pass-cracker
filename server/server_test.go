@@ -10,7 +10,7 @@ var requestClient *client.RequestClient
 
 func init() {
 	go startServer(8888)
-	time.Sleep(time.Duration(5) * time.Second)
+	time.Sleep(time.Duration(1) * time.Second)
 	requestClient = client.NewReqClient("localhost", 8888)
 }
 

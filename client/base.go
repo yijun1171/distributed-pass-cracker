@@ -5,6 +5,7 @@ import (
 	"github.com/yijun1171/Lab1/module"
 	"log"
 	"net/rpc"
+	"net/rpc/jsonrpc"
 )
 
 //client base struct
@@ -17,7 +18,7 @@ type Client struct {
 
 func NewClient(add module.Address) *Client {
 	host := add.GetHost()
-	client, e := rpc.Dial("tcp", host)
+	client, e := jsonrpc.Dial("tcp", host)
 	//acts like dial, connects to the address on the named network
 	//Dial("tcp", "12.34.56.78:80") address format is host:name
 	//DialTimeout(network, address, timeout)

@@ -11,7 +11,7 @@ import (
 //rpc调用方法名常量
 const (
 	MHASH           = "MHash"
-	MACK_JOB        = "MAckJob"
+	MACK_JOB        = "AckJob"
 	MREQ_JOIN       = "MReqJoin"
 	MJOB            = "MJob"
 	MPING           = "MPing"
@@ -40,6 +40,11 @@ type Protocol struct {
 
 func NewMsg(commond string, clientId string, msg string) *Protocol {
 	return &Protocol{commond, clientId, msg}
+}
+
+//组合service和method
+func GetMethod(name string) string {
+	return "ServerHandler." + name
 }
 
 func CheckFatal(err error) bool {
